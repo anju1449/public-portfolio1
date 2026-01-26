@@ -34,12 +34,24 @@ function WebGLFallback() {
   );
 }
 
-function App() {
-  // Check for WebGL support
-  const canvas = document.createElement('canvas');
-  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+// Check for WebGL support once
+const isWebGLSupported = (() => {
+  try {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (gl) {
+      // Clean up the context immediately
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      return true;
+    }
+    return false;
+  } catch (e) {
+    return false;
+  }
+})();
 
-  if (!gl) {
+function App() {
+  if (!isWebGLSupported) {
     return <WebGLFallback />;
   }
 

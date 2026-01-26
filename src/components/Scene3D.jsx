@@ -32,16 +32,24 @@ function Scene3D({ children }) {
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
             <Canvas
                 camera={{ position: [0, 0, 5], fov: 75 }}
+                dpr={1}
                 gl={{
-                    preserveDrawingBuffer: true,
-                    antialias: true,
-                    powerPreference: 'high-performance'
+                    preserveDrawingBuffer: false,
+                    antialias: false,
+                    // powerPreference: 'high-performance' - removed to save battery/stability
                 }}
                 onCreated={({ gl }) => {
                     gl.setClearColor('#000000', 1);
 
                     // Save real canvas element for context lost handling
                     canvasRef.current = gl.domElement;
+
+                    // Aggressive cleanup on unmount
+                    return () => {
+                        const extension = gl.getExtension('WEBGL_lose_context');
+                        if (extension) extension.loseContext();
+                        gl.dispose();
+                    };
                 }}
             >
                 <ambientLight intensity={0.5} />

@@ -24,7 +24,8 @@ function About() {
     return (
         <section id="about" className="min-h-screen flex items-center justify-center py-20 px-4 relative">
             {/* Background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black via-purple-900/10 to-black pointer-events-none" />
+            {/* Background gradient removed for global 3D visibility */}
+            {/* <div className="absolute inset-0 bg-gradient-to-b from-black via-purple-900/10 to-black pointer-events-none" /> */}
 
             <motion.div
                 className="max-w-4xl mx-auto relative z-10"

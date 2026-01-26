@@ -3,7 +3,7 @@
 
 export const portfolioConfig = {
     // Personal Information
-    name: "YOUR NAME",
+    name: "Dravin Gupta ",
     role: "Full Stack Developer & Creative Coder",
     tagline: "Building immersive digital experiences",
 

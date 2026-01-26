@@ -21,7 +21,17 @@ function StarField({ count = 5000 }) {
 
     useFrame((state) => {
         if (points.current) {
-            points.current.rotation.y = state.clock.elapsedTime * 0.05;
+            // Base rotation - very slow drift
+            let rotationSpeed = 0.0003;
+
+            // Accelerate based on scroll position - "Warp Speed" effect
+            // We use window.scrollY directly for simplicity in this global context
+            const scrollY = window.scrollY;
+            // Much subtler acceleration
+            rotationSpeed += Math.min(scrollY * 0.00002, 0.02);
+
+            points.current.rotation.y += rotationSpeed;
+            points.current.rotation.x += rotationSpeed * 0.2;
         }
     });
 

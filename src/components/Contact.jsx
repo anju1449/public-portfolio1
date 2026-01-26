@@ -61,7 +61,8 @@ function Contact() {
 
     return (
         <section id="contact" className="min-h-screen py-20 px-4 relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-black via-pink-900/10 to-black pointer-events-none" />
+            {/* Background gradient removed for global 3D visibility */}
+            {/* <div className="absolute inset-0 bg-gradient-to-b from-black via-pink-900/10 to-black pointer-events-none" /> */}
 
             <div className="max-w-4xl mx-auto relative z-10">
                 <motion.h2

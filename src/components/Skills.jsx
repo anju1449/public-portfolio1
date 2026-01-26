@@ -1,33 +1,36 @@
 import { motion } from 'framer-motion';
 import { portfolioConfig } from '../config/portfolioConfig';
+import TiltCard from './TiltCard';
 
 function SkillCategory({ title, skills, color }) {
     return (
         <motion.div
-            className="glass-effect p-6 rounded-xl"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
         >
-            <h3 className={`text-2xl font-bold mb-4 text-${color}`}>
-                {title}
-            </h3>
-            <div className="flex flex-wrap gap-2">
-                {skills.map((skill, index) => (
-                    <motion.span
-                        key={index}
-                        className={`px-4 py-2 bg-${color}/10 text-${color} border border-${color}/30 rounded-full text-sm hover:bg-${color}/20 transition-all cursor-default`}
-                        whileHover={{ scale: 1.05 }}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.3, delay: index * 0.05 }}
-                    >
-                        {skill}
-                    </motion.span>
-                ))}
-            </div>
+            <TiltCard className="glass-effect p-6 rounded-xl h-full">
+                <h3 className={`text-2xl font-bold mb-4 text-${color}`}>
+                    {title}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                    {skills.map((skill, index) => (
+                        <motion.span
+                            key={index}
+                            className={`px-4 py-2 bg-${color}/10 text-${color} border border-${color}/30 rounded-full text-sm hover:bg-${color}/20 transition-all cursor-default`}
+                            whileHover={{ scale: 1.05 }}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.3, delay: index * 0.05 }}
+                            style={{ transform: "translateZ(30px)" }}
+                        >
+                            {skill}
+                        </motion.span>
+                    ))}
+                </div>
+            </TiltCard>
         </motion.div>
     );
 }
@@ -35,7 +38,8 @@ function SkillCategory({ title, skills, color }) {
 function Skills() {
     return (
         <section id="skills" className="min-h-screen py-20 px-4 relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-black via-green-900/10 to-black pointer-events-none" />
+            {/* Background gradient removed for global 3D visibility */}
+            {/* <div className="absolute inset-0 bg-gradient-to-b from-black via-green-900/10 to-black pointer-events-none" /> */}
 
             <div className="max-w-6xl mx-auto relative z-10">
                 <motion.h2

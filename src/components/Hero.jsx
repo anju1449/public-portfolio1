@@ -1,53 +1,50 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { portfolioConfig } from '../config/portfolioConfig';
-import Scene3D from './Scene3D';
-import FloatingText from './FloatingText';
-import StarField from './StarField';
+import SciFiCard from './SciFiCard';
 
 function Hero() {
+    const { scrollY } = useScroll();
+
+    // Animation: "Holographic Materialization"
+    // Cards start deep in space, tilted back, and fly forward while straightening up
+    const rotateX = useTransform(scrollY, [0, 400], [60, 0]); // Starts tilted 60deg back
+    const z = useTransform(scrollY, [0, 400], [-1000, 0]); // Starts far away
+    const opacity = useTransform(scrollY, [0, 300], [0, 1]); // Fades in
+    const scale = useTransform(scrollY, [0, 400], [0.5, 1]); // Grows
+
     return (
-        <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-            {/* 3D Background */}
+        <section id="home" className="relative min-h-screen flex flex-col justify-end items-center pb-32 overflow-hidden perspective-1000">
+            {/* 3D Background - Moved to Global App.jsx */}
             <div className="absolute inset-0 z-0">
-                <Scene3D>
-                    <StarField />
-                    <FloatingText text={portfolioConfig.name} position={[0, 0, 0]} />
-                </Scene3D>
+                {/* 3D Scene is now global */}
             </div>
 
-            {/* Overlay Content */}
-            <div className="relative z-10 text-center px-4 pointer-events-none">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.5 }}
-                >
-                    <h2 className="text-2xl md:text-3xl font-light text-neon-purple mb-4">
-                        {portfolioConfig.role}
-                    </h2>
-                    <p className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto">
-                        {portfolioConfig.tagline}
-                    </p>
-                </motion.div>
+            {/* Scroll-Triggered Sci-Fi Cards */}
+            <motion.div
+                className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 px-4 max-w-5xl mx-auto w-full"
+                style={{
+                    rotateX,
+                    z,
+                    opacity,
+                    scale,
+                    transformStyle: 'preserve-3d',
+                }}
+            >
+                <SciFiCard title="Identity" delay={0}>
+                    <p className="text-lg font-bold text-white mb-2">{portfolioConfig.role}</p>
+                    <p className="text-xs text-neon-blue">class: CREATIVE_DEV</p>
+                </SciFiCard>
 
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 1.5 }}
-                    className="mt-12 pointer-events-auto"
-                >
-                    <a
-                        href="#about"
-                        className="inline-block px-8 py-3 bg-transparent border-2 border-neon-blue text-neon-blue rounded-full hover:bg-neon-blue hover:text-black transition-all duration-300 neon-glow"
-                    >
-                        Explore
-                    </a>
-                </motion.div>
-            </div>
+                <SciFiCard title="Mission" delay={0.2}>
+                    <p className="text-lg font-bold text-white mb-2">Immersive Experiences</p>
+                    <p className="text-xs text-neon-purple">status: ONLINE</p>
+                </SciFiCard>
+            </motion.div>
 
-            {/* Scroll Indicator */}
+            {/* Scroll Indicator - Fades out as cards appear */}
             <motion.div
                 className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
+                style={{ opacity: useTransform(scrollY, [0, 100], [1, 0]) }}
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
             >

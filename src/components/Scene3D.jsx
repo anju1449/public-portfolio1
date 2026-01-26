@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { OrbitControls, Environment } from '@react-three/drei';
 
 function Scene3D({ children }) {
     const canvasRef = useRef();
@@ -32,7 +32,7 @@ function Scene3D({ children }) {
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
             <Canvas
                 camera={{ position: [0, 0, 5], fov: 75 }}
-                dpr={1}
+                dpr={[1, 2]}
                 gl={{
                     preserveDrawingBuffer: false,
                     antialias: false,
@@ -55,6 +55,7 @@ function Scene3D({ children }) {
                 <ambientLight intensity={0.5} />
                 <pointLight position={[10, 10, 10]} intensity={1} />
                 <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00d4ff" />
+                <Environment preset="city" />
                 <OrbitControls
                     enableZoom={false}
                     enablePan={false}

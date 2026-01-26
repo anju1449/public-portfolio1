@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { portfolioConfig } from '../config/portfolioConfig';
 import TiltCard from './TiltCard';
+import { useSectionActivation, SCANLINE_FLASH_CLASS } from '../utils/activationEvents';
 
 function ProjectCard({ project, index }) {
     return (
@@ -68,8 +69,14 @@ function ProjectCard({ project, index }) {
 }
 
 function Projects() {
+    const { isActivating, elementRef } = useSectionActivation('projects');
+
     return (
-        <section id="projects" className="min-h-screen py-20 px-4 relative">
+        <section
+            ref={elementRef}
+            id="projects"
+            className={`min-h-screen py-20 px-4 relative ${isActivating ? SCANLINE_FLASH_CLASS : ''}`}
+        >
             {/* Background gradient removed for global 3D visibility */}
             {/* <div className="absolute inset-0 bg-gradient-to-b from-black via-blue-900/10 to-black pointer-events-none" /> */}
 

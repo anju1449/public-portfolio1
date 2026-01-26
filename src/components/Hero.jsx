@@ -1,9 +1,11 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { portfolioConfig } from '../config/portfolioConfig';
 import SciFiCard from './SciFiCard';
+import { useSectionActivation, NEON_PULSE_CLASS } from '../utils/activationEvents';
 
 function Hero() {
     const { scrollY } = useScroll();
+    const { isActivating, elementRef } = useSectionActivation('hero');
 
     // Animation: "Holographic Materialization"
     // Cards start deep in space, tilted back, and fly forward while straightening up
@@ -13,7 +15,11 @@ function Hero() {
     const scale = useTransform(scrollY, [0, 400], [0.5, 1]); // Grows
 
     return (
-        <section id="home" className="relative min-h-screen flex flex-col justify-end items-center pb-32 overflow-hidden perspective-1000">
+        <section
+            ref={elementRef}
+            id="home"
+            className="relative min-h-screen flex flex-col justify-end items-center pb-32 overflow-hidden perspective-1000"
+        >
             {/* 3D Background - Moved to Global App.jsx */}
             <div className="absolute inset-0 z-0">
                 {/* 3D Scene is now global */}
@@ -21,7 +27,7 @@ function Hero() {
 
             {/* Scroll-Triggered Sci-Fi Cards */}
             <motion.div
-                className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 px-4 max-w-5xl mx-auto w-full"
+                className={`relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 px-4 max-w-5xl mx-auto w-full ${isActivating ? NEON_PULSE_CLASS : ''}`}
                 style={{
                     rotateX,
                     z,

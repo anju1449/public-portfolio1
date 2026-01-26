@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment } from '@react-three/drei';
+import CameraController from './CameraController';
+import { usePerformanceMonitor } from '../utils/performanceMonitor';
 
 function Scene3D({ children }) {
     const canvasRef = useRef();
@@ -52,20 +54,33 @@ function Scene3D({ children }) {
                     };
                 }}
             >
-                <ambientLight intensity={0.5} />
-                <pointLight position={[10, 10, 10]} intensity={1} />
-                <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00d4ff" />
-                <Environment preset="city" />
-                <OrbitControls
-                    enableZoom={false}
-                    enablePan={false}
-                    maxPolarAngle={Math.PI / 2}
-                    minPolarAngle={Math.PI / 2}
-                />
-                {children}
+                <SceneContent>{children}</SceneContent>
             </Canvas>
         </div>
     );
 }
 
+// Separate component to use hooks inside Canvas
+function SceneContent({ children }) {
+    const { disableReflections } = usePerformanceMonitor();
+
+    return (
+        <>
+            <ambientLight intensity={0.5} />
+            <pointLight position={[10, 10, 10]} intensity={1} />
+            <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00d4ff" />
+            {!disableReflections && <Environment preset="city" />}
+            <OrbitControls
+                enableZoom={false}
+                enablePan={false}
+                maxPolarAngle={Math.PI / 2}
+                minPolarAngle={Math.PI / 2}
+            />
+            <CameraController />
+            {children}
+        </>
+    );
+}
+
 export default Scene3D;
+

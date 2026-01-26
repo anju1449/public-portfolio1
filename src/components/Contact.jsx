@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import { portfolioConfig } from '../config/portfolioConfig';
+import { useSectionActivation, GLOW_CLASS } from '../utils/activationEvents';
 
 function Contact() {
     const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ function Contact() {
     });
     const [status, setStatus] = useState('');
     const [loading, setLoading] = useState(false);
+    const { isActivating, elementRef } = useSectionActivation('contact');
 
     const handleChange = (e) => {
         setFormData({
@@ -60,7 +62,11 @@ function Contact() {
     };
 
     return (
-        <section id="contact" className="min-h-screen py-20 px-4 relative">
+        <section
+            ref={elementRef}
+            id="contact"
+            className="min-h-screen py-20 px-4 relative"
+        >
             {/* Background gradient removed for global 3D visibility */}
             {/* <div className="absolute inset-0 bg-gradient-to-b from-black via-pink-900/10 to-black pointer-events-none" /> */}
 
@@ -78,7 +84,7 @@ function Contact() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Contact Form */}
                     <motion.div
-                        className="glass-effect p-8 rounded-xl"
+                        className={`glass-effect p-8 rounded-xl ${isActivating ? GLOW_CLASS : ''}`}
                         initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}

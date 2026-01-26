@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { portfolioConfig } from '../config/portfolioConfig';
 import TiltCard from './TiltCard';
+import { useSectionActivation, GEOMETRY_SNAP_CLASS } from '../utils/activationEvents';
 
 function SkillCategory({ title, skills, color }) {
     return (
@@ -36,8 +37,14 @@ function SkillCategory({ title, skills, color }) {
 }
 
 function Skills() {
+    const { isActivating, elementRef } = useSectionActivation('skills');
+
     return (
-        <section id="skills" className="min-h-screen py-20 px-4 relative">
+        <section
+            ref={elementRef}
+            id="skills"
+            className={`min-h-screen py-20 px-4 relative ${isActivating ? GEOMETRY_SNAP_CLASS : ''}`}
+        >
             {/* Background gradient removed for global 3D visibility */}
             {/* <div className="absolute inset-0 bg-gradient-to-b from-black via-green-900/10 to-black pointer-events-none" /> */}
 

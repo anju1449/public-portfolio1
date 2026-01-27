@@ -29,6 +29,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Hide default cursor only on devices that have a cursor (desktop) */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }

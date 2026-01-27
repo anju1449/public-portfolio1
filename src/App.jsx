@@ -5,13 +5,28 @@ import About from './components/About';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
+import CustomCursor from './components/CustomCursor';
 
 function LoadingFallback() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black">
-      <div className="text-center">
-        <div className="w-16 h-16 border-4 border-neon-blue border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-neon-blue text-xl">Loading Experience...</p>
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#000',
+      color: '#00d4ff'
+    }}>
+      <div style={{ textAlign: 'center' }}>
+        <div className="animate-spin" style={{
+          width: '64px',
+          height: '64px',
+          border: '4px solid #00d4ff',
+          borderTopColor: 'transparent',
+          borderRadius: '50%',
+          margin: '0 auto 16px'
+        }} />
+        <p style={{ fontSize: '1.25rem' }}>Loading Experience...</p>
       </div>
     </div>
   );
@@ -44,7 +59,8 @@ function App() {
   }
 
   return (
-    <div className="app">
+    <div className="app bg-black min-h-screen">
+      <CustomCursor />
       <Navigation />
 
       <Suspense fallback={<LoadingFallback />}>

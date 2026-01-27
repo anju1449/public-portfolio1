@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { portfolioConfig } from '../config/portfolioConfig';
 import Scene3D from './Scene3D';
@@ -6,13 +7,15 @@ import StarField from './StarField';
 
 function Hero() {
     return (
-        <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
             {/* 3D Background */}
             <div className="absolute inset-0 z-0">
-                <Scene3D>
-                    <StarField />
-                    <FloatingText text={portfolioConfig.name} position={[0, 0, 0]} />
-                </Scene3D>
+                <Suspense fallback={<div className="w-full h-full bg-black" />}>
+                    <Scene3D>
+                        <StarField />
+                        <FloatingText text={portfolioConfig.name} position={[0, 0, 0]} />
+                    </Scene3D>
+                </Suspense>
             </div>
 
             {/* Overlay Content */}
@@ -47,7 +50,7 @@ function Hero() {
 
             {/* Scroll Indicator */}
             <motion.div
-                className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
+                className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10"
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
             >

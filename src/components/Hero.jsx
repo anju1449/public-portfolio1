@@ -1,6 +1,8 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { portfolioConfig } from '../config/portfolioConfig';
 import SciFiCard from './SciFiCard';
+import AnimatedButton from './AnimatedButton';
+import GradientText from './GradientText';
 import { useSectionActivation, NEON_PULSE_CLASS } from '../utils/activationEvents';
 
 function Hero() {
@@ -18,11 +20,48 @@ function Hero() {
         <section
             ref={elementRef}
             id="home"
-            className="relative min-h-screen flex flex-col justify-end items-center pb-32 overflow-hidden perspective-1000"
+            className="relative min-h-screen flex flex-col justify-center items-center pb-20 overflow-hidden perspective-2000"
         >
             {/* 3D Background - Moved to Global App.jsx */}
             <div className="absolute inset-0 z-0">
                 {/* 3D Scene is now global */}
+            </div>
+
+            {/* Hero Content */}
+            <div className="relative z-10 text-center mb-12 px-4">
+                <motion.h1
+                    className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black mb-6"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                    <GradientText variant="blue-purple" className="text-glow-strong">
+                        {portfolioConfig.name}
+                    </GradientText>
+                </motion.h1>
+
+                <motion.p
+                    className="text-xl sm:text-2xl md:text-3xl text-gray-300 mb-8 font-light"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                >
+                    {portfolioConfig.role}
+                </motion.p>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.6 }}
+                >
+                    <AnimatedButton
+                        href="#contact"
+                        variant="primary"
+                        className="text-lg"
+                    >
+                        Let's Connect
+                    </AnimatedButton>
+                </motion.div>
             </div>
 
             {/* Scroll-Triggered Sci-Fi Cards */}
@@ -47,14 +86,14 @@ function Hero() {
                 </SciFiCard>
             </motion.div>
 
-            {/* Scroll Indicator - Fades out as cards appear */}
+            {/* Enhanced Scroll Indicator */}
             <motion.div
                 className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10"
                 style={{ opacity: useTransform(scrollY, [0, 100], [1, 0]) }}
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
             >
-                <div className="w-6 h-10 border-2 border-neon-blue rounded-full flex justify-center">
+                <div className="w-6 h-10 border-2 border-neon-blue rounded-full flex justify-center shadow-neon-blue animate-glow-pulse">
                     <motion.div
                         className="w-1 h-2 bg-neon-blue rounded-full mt-2"
                         animate={{ y: [0, 12, 0] }}

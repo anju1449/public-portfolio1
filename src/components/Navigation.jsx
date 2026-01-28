@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { portfolioConfig } from '../config/portfolioConfig';
 
 function Navigation() {
     const [activeSection, setActiveSection] = useState('home');
@@ -39,23 +40,38 @@ function Navigation() {
 
     return (
         <motion.nav
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'glass-effect shadow-lg' : ''
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'glass-effect-strong shadow-2xl border-b border-white/10' : 'bg-transparent'
                 }`}
             initial={{ y: -100 }}
             animate={{ y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
         >
-            <div className="max-w-7xl mx-auto px-4 py-4">
-                <div className="flex justify-center items-center">
-                    <ul className="flex space-x-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div className="flex justify-between items-center">
+                    {/* Logo */}
+                    <motion.a
+                        href="#home"
+                        className="font-display font-bold text-xl sm:text-2xl gradient-text-blue-purple"
+                        whileHover={{ scale: 1.05 }}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                    >
+                        {portfolioConfig.name.split(' ')[0]}
+                    </motion.a>
+
+                    {/* Navigation Links */}
+                    <ul className="flex space-x-4 sm:space-x-8">
                         {sections.map((section) => (
                             <li key={section.id}>
-                                <a
+                                <motion.a
                                     href={`#${section.id}`}
-                                    className={`relative text-sm md:text-base font-medium transition-colors duration-300 ${activeSection === section.id
+                                    className={`relative text-sm md:text-base font-medium transition-all duration-300 ${activeSection === section.id
                                             ? 'text-neon-blue'
                                             : 'text-gray-400 hover:text-white'
                                         }`}
+                                    whileHover={{ y: -2 }}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         const element = document.getElementById(section.id);
@@ -67,12 +83,15 @@ function Navigation() {
                                     {section.label}
                                     {activeSection === section.id && (
                                         <motion.div
-                                            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-neon-blue"
+                                            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink rounded-full"
                                             layoutId="activeSection"
-                                            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                                            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                                            style={{
+                                                boxShadow: '0 0 10px rgba(0, 212, 255, 0.8)',
+                                            }}
                                         />
                                     )}
-                                </a>
+                                </motion.a>
                             </li>
                         ))}
                     </ul>

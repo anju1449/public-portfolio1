@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { portfolioConfig } from '../config/portfolioConfig';
+import GradientText from './GradientText';
 
 function About() {
     const containerVariants = {
@@ -35,15 +36,18 @@ function About() {
                 viewport={{ once: true, margin: "-100px" }}
             >
                 <motion.h2
-                    className="text-4xl md:text-5xl font-bold mb-8 text-center text-glow text-neon-blue"
+                    className="text-4xl md:text-5xl font-display font-bold mb-8 text-center"
                     variants={itemVariants}
                 >
-                    {portfolioConfig.about.title}
+                    <GradientText variant="blue-purple" className="text-glow">
+                        {portfolioConfig.about.title}
+                    </GradientText>
                 </motion.h2>
 
                 <motion.div
-                    className="glass-effect p-8 rounded-2xl"
+                    className="glass-effect-strong p-8 md:p-10 rounded-2xl card-shine border border-neon-blue/20 hover:border-neon-blue/40 transition-all duration-500"
                     variants={itemVariants}
+                    whileHover={{ scale: 1.02 }}
                 >
                     <p className="text-lg text-gray-300 leading-relaxed mb-8 whitespace-pre-line">
                         {portfolioConfig.about.description}
@@ -53,11 +57,23 @@ function About() {
                         {portfolioConfig.about.highlights.map((highlight, index) => (
                             <motion.div
                                 key={index}
-                                className="flex items-start space-x-3"
+                                className="flex items-start space-x-3 group"
                                 variants={itemVariants}
+                                whileHover={{ x: 5 }}
                             >
-                                <div className="w-2 h-2 bg-neon-green rounded-full mt-2 flex-shrink-0" />
-                                <p className="text-gray-300">{highlight}</p>
+                                <motion.div
+                                    className="w-2 h-2 rounded-full mt-2 flex-shrink-0 bg-gradient-to-r from-neon-green to-neon-blue"
+                                    animate={{
+                                        scale: [1, 1.2, 1],
+                                        boxShadow: [
+                                            '0 0 5px rgba(0, 255, 159, 0.5)',
+                                            '0 0 15px rgba(0, 255, 159, 0.8)',
+                                            '0 0 5px rgba(0, 255, 159, 0.5)',
+                                        ]
+                                    }}
+                                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                                />
+                                <p className="text-gray-300 group-hover:text-white transition-colors">{highlight}</p>
                             </motion.div>
                         ))}
                     </div>
